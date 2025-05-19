@@ -15,6 +15,7 @@
 #include "selfdrive/ui/qt/widgets/scrollview.h"
 #include "selfdrive/ui/qt/offroad/developer_panel.h"
 #include "selfdrive/ui/qt/offroad/firehose.h"
+#include "selfdrive/ui/qt/widgets/slidercontrol.h"
 
 TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   // param, title, desc, icon
@@ -71,6 +72,15 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
                                              "your steering wheel distance button."),
                                           "../assets/icons/speed_limit.png",
                                           longi_button_texts);
+
+  // Throttle limit
+  SliderControl *throttle_limit_slider = new SliderControl("ThrottleLimit",
+    tr("Throttle Limit (m/s)"),
+    tr("Limits maximum gas applied by OpenPilot. m/s"),
+    0, 10, 5);
+  addItem(throttle_limit_slider);
+
+
 
   // set up uiState update for personality setting
   QObject::connect(uiState(), &UIState::uiUpdate, this, &TogglesPanel::updateState);

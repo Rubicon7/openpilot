@@ -1,6 +1,7 @@
 import numpy as np
 from cereal import car
 from openpilot.common.realtime import DT_CTRL
+from openpilot.common.params import Params
 from openpilot.selfdrive.controls.lib.drive_helpers import CONTROL_N
 from openpilot.common.pid import PIDController
 from openpilot.selfdrive.modeld.constants import ModelConstants
@@ -52,6 +53,7 @@ class LongControl:
                              (CP.longitudinalTuning.kiBP, CP.longitudinalTuning.kiV),
                              k_f=CP.longitudinalTuning.kf, rate=1 / DT_CTRL)
     self.last_output_accel = 0.0
+    self.params =  Params()
 
   def reset(self):
     self.pid.reset()
@@ -85,4 +87,9 @@ class LongControl:
                                      feedforward=a_target)
 
     self.last_output_accel = np.clip(output_accel, accel_limits[0], accel_limits[1])
+    try:
+      l = float(self.params.get("ThrottleLimit"))
+      self.last_output_accel = np.clip(self.last_output_accel, accel_limits[0], l)
+    except Exception as e:
+      pass
     return self.last_output_accel
