@@ -1,7 +1,7 @@
 #include "slidercontrol.h"
 
 SliderControl::SliderControl(const QString &param, const QString &title, const QString &desc,
-                             int min, int max, int step, QWidget *parent)
+                             int min, int max, float step, QWidget *parent)
     : QWidget(parent), param_name(param) {
   QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -30,7 +30,7 @@ SliderControl::SliderControl(const QString &param, const QString &title, const Q
   int val = QString::fromStdString(params.get(param.toStdString())).toInt(&ok);
   if (!ok) val = max;
   slider->setValue(val);
-  value_label->setText(QString::number(val) + "%");
+  value_label->setText(QString::number(val) + " m/s");
 
   QObject::connect(slider, &QSlider::valueChanged, this, &SliderControl::valueChanged);
 }

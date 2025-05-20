@@ -77,7 +77,7 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
   SliderControl *throttle_limit_slider = new SliderControl("ThrottleLimit",
     tr("Throttle Limit (m/s)"),
     tr("Limits maximum gas applied by OpenPilot. m/s"),
-    1, 10, 0.5);
+    1, 10, 0.5f);
   addItem(throttle_limit_slider);
 
 
