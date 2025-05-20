@@ -22,7 +22,26 @@ SliderControl::SliderControl(const QString &param, const QString &title, const Q
   slider->setSingleStep(1);
   slider->setTickInterval(1);
   slider->setTickPosition(QSlider::TicksBelow);
-  slider->setMinimumHeight(80);  // 👈 Makes it easier to drag with a finger
+
+  // 👉 Force bigger size
+  slider->setMinimumHeight(100);
+  slider->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+  // 👉 Optional but helpful: style for better visibility
+  slider->setStyleSheet(R"(
+    QSlider::groove:horizontal {
+      height: 20px;
+      background: #444;
+      border-radius: 10px;
+    }
+    QSlider::handle:horizontal {
+      background: white;
+      border: 2px solid #888;
+      width: 40px;
+      margin: -10px 0;
+      border-radius: 20px;
+    }
+  )");
 
   layout->addWidget(title_label);
   layout->addWidget(desc_label);
