@@ -1,9 +1,10 @@
 #include "slidercontrol.h"
 
 SliderControl::SliderControl(const QString &param, const QString &title, const QString &desc,
-                             int min, int max, int step, QWidget *parent)
-    : QWidget(parent), param_name(param) {
+                             float min, float max, float step, QWidget *parent)
+    : QWidget(parent), param_name(param), min_val(min), step_size(step) {
   QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setSpacing(15);
 
   QLabel *title_label = new QLabel(title, this);
   title_label->setStyleSheet("font-weight: bold;");
@@ -13,12 +14,15 @@ SliderControl::SliderControl(const QString &param, const QString &title, const Q
   desc_label->setStyleSheet("color: grey; font-size: 35px;");
 
   value_label = new QLabel(this);
+  value_label->setStyleSheet("font-size: 45px;");
 
   slider = new QSlider(Qt::Horizontal, this);
-  slider->setRange(min, max);
-  slider->setSingleStep(step);
-  slider->setTickInterval(step);
+  int steps = int((max - min) / step);
+  slider->setRange(0, steps);
+  slider->setSingleStep(1);
+  slider->setTickInterval(1);
   slider->setTickPosition(QSlider::TicksBelow);
+  slider->setMinimumHeight(80);  // 👈 Makes it easier to drag with a finger
 
   layout->addWidget(title_label);
   layout->addWidget(desc_label);
@@ -27,15 +31,17 @@ SliderControl::SliderControl(const QString &param, const QString &title, const Q
 
   Params params;
   bool ok = false;
-  int val = QString::fromStdString(params.get(param.toStdString())).toInt(&ok);
-  if (!ok) val = max;
-  slider->setValue(val);
-  value_label->setText(QString::number(val) + " m/s");
+  float saved_val = QString::fromStdString(params.get(param.toStdString())).toFloat(&ok);
+  if (!ok) saved_val = max;
+  int initial_step = int((saved_val - min) / step);
+  slider->setValue(initial_step);
+  value_label->setText(QString::number(saved_val, 'f', 1) + " m/s");
 
   QObject::connect(slider, &QSlider::valueChanged, this, &SliderControl::valueChanged);
 }
 
-void SliderControl::valueChanged(int value) {
+void SliderControl::valueChanged(int step_index) {
+  float value = min_val + (step_index * step_size);
   Params().put(param_name.toStdString(), std::to_string(value));
-  value_label->setText(QString::number(value) + " m/s");
+  value_label->setText(QString::number(value, 'f', 1) + " m/s");
 }
