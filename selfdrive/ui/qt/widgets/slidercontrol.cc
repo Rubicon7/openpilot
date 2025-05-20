@@ -1,7 +1,7 @@
 #include "slidercontrol.h"
 
 SliderControl::SliderControl(const QString &param, const QString &title, const QString &desc,
-                             int min, int max, float step, QWidget *parent)
+                             int min, int max, int step, QWidget *parent)
     : QWidget(parent), param_name(param) {
   QVBoxLayout *layout = new QVBoxLayout(this);
 
