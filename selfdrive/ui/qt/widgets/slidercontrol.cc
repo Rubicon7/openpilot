@@ -37,5 +37,5 @@ SliderControl::SliderControl(const QString &param, const QString &title, const Q
 
 void SliderControl::valueChanged(int value) {
   Params().put(param_name.toStdString(), std::to_string(value));
-  value_label->setText(QString::number(value) + "%");
+  value_label->setText(QString::number(value) + " m/s");
 }
