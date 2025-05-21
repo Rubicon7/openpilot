@@ -24,5 +24,5 @@ private:
   bool v_ego_cluster_seen = false;
   int status = STATUS_DISENGAGED;
 
-  float throttle_show = 0f;
+  float throttle_show = 0;
 };
