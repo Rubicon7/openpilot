@@ -25,7 +25,7 @@ void HudRenderer::updateState(const UIState &s) {
 
   // Handle older routes where vCruiseCluster is not set
   set_speed = car_state.getVCruiseCluster() == 0.0 ? controls_state.getVCruiseDEPRECATED() : car_state.getVCruiseCluster();
-  throttle_show = controls_state.getGas();
+  //throttle_show = controls_state.getGas();
   is_cruise_set = set_speed > 0 && set_speed != SET_SPEED_NA;
   is_cruise_available = set_speed != -1;
 
@@ -93,10 +93,10 @@ void HudRenderer::drawSetSpeed(QPainter &p, const QRect &surface_rect) {
   p.drawText(set_speed_rect.adjusted(0, 77, 0, 0), Qt::AlignTop | Qt::AlignHCenter, setSpeedStr);
 
   // Draw throttle out
-  QString throttleOutStr = is_cruise_set ? QString::number(std::nearbyint(throttle_show*100)) : "–";
-  p.setFont(InterFont(40, QFont::Bold));
-  p.setPen(set_speed_color);
-  p.drawText(set_speed_rect.adjusted(0, -27, 0, 0), Qt::AlignTop | Qt::AlignHCenter, throttleOutStr);
+  // QString throttleOutStr = is_cruise_set ? QString::number(std::nearbyint(throttle_show*100)) : "–";
+  // p.setFont(InterFont(40, QFont::Bold));
+  // p.setPen(set_speed_color);
+  // p.drawText(set_speed_rect.adjusted(0, -27, 0, 0), Qt::AlignTop | Qt::AlignHCenter, throttleOutStr);
 }
 
 void HudRenderer::drawCurrentSpeed(QPainter &p, const QRect &surface_rect) {
