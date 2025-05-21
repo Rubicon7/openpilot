@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 inline static std::unordered_map<std::string, uint32_t> keys = {
+    {"ThrottleLimit", PERSISTENT},
     {"AccessToken", CLEAR_ON_MANAGER_START | DONT_LOG},
     {"AdbEnabled", PERSISTENT},
     {"AlwaysOnDM", PERSISTENT},
