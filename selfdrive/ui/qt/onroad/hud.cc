@@ -25,7 +25,7 @@ void HudRenderer::updateState(const UIState &s) {
 
   // Handle older routes where vCruiseCluster is not set
   set_speed = car_state.getVCruiseCluster() == 0.0 ? controls_state.getVCruiseDEPRECATED() : car_state.getVCruiseCluster();
-  throttle_show = controls_state.getActuators().getGas();
+  throttle_show = controls_state.getGas();
   is_cruise_set = set_speed > 0 && set_speed != SET_SPEED_NA;
   is_cruise_available = set_speed != -1;
 
