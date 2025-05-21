@@ -41,7 +41,6 @@ def manager_init() -> None:
     ("OpenpilotEnabledToggle", "1"),
     ("LongitudinalPersonality", str(log.LongitudinalPersonality.standard)),
     ("ThrottleLimit", "5"),
-    ("ThrottleSpeedBias", "5"),
   ]
 
   if params.get_bool("RecordFrontLock"):
